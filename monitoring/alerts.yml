@@ -1,3 +1,10 @@
-'EOF'
-groups: []
-EOF
+groups:
+  - name: portal-alerts
+    rules:
+      - alert: HighErrorRate
+        expr: sum(rate(http_requests_total{status=~"5.."}[5m])) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High server error rate on the learning portal"
